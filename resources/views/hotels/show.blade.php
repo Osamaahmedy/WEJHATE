@@ -26,10 +26,17 @@
             <!-- Left Column: Hotel Info (col-span-8) -->
             <div class="lg:col-span-8 space-y-8">
                 <!-- Large Hotel Banner -->
-                <div class="bg-gradient-to-tr from-sky-800 to-cyan-500 text-white rounded-3xl p-10 h-72 flex flex-col justify-end relative overflow-hidden shadow-sm">
+                <div class="rounded-3xl h-72 flex flex-col justify-end relative overflow-hidden shadow-sm">
+                    @if($hotel->image && file_exists(public_path($hotel->image)))
+                        <img src="{{ asset($hotel->image) }}" alt="{{ $hotel->name }}" class="absolute inset-0 w-full h-full object-cover">
+                    @elseif($hotel->image && file_exists(public_path('storage/' . $hotel->image)))
+                        <img src="{{ asset('storage/' . $hotel->image) }}" alt="{{ $hotel->name }}" class="absolute inset-0 w-full h-full object-cover">
+                    @else
+                        <div class="absolute inset-0 bg-gradient-to-tr from-sky-800 to-cyan-500"></div>
+                    @endif
                     <div class="absolute inset-0 bg-slate-950/40"></div>
-                    <div class="relative z-10 space-y-2 text-right">
-                        <span class="bg-white/95 text-slate-800 px-3 py-1 rounded-full text-xs font-bold shadow-sm inline-flex items-center gap-1">
+                    <div class="relative z-10 space-y-2 text-right p-10 text-white">
+                        <span class="bg-white/90 backdrop-blur-md text-slate-800 px-3 py-1 rounded-full text-xs font-bold shadow-sm inline-flex items-center gap-1">
                             <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                             {{ number_format($hotel->rating, 1) }}
                         </span>
@@ -50,19 +57,19 @@
                 <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm text-right">
                     <h3 class="text-xl font-bold text-slate-900 border-b border-slate-50 pb-4 mb-6">الميزات والخدمات</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                        <div class="p-4 bg-slate-50 rounded-2xl flex flex-col items-center justify-center text-center space-y-2">
+                        <div class="p-4 bg-slate-50 border border-slate-100/50 hover:bg-slate-100 hover:scale-[1.02] rounded-2xl flex flex-col items-center justify-center text-center space-y-2 transition duration-200 cursor-default">
                             <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071a10.5 10.5 0 0114.14 0M1.414 6.586a16.5 16.5 0 0121.172 0"/></svg>
                             <span class="text-xs font-bold text-slate-700">إنترنت مجاني سريع</span>
                         </div>
-                        <div class="p-4 bg-slate-50 rounded-2xl flex flex-col items-center justify-center text-center space-y-2">
+                        <div class="p-4 bg-slate-50 border border-slate-100/50 hover:bg-slate-100 hover:scale-[1.02] rounded-2xl flex flex-col items-center justify-center text-center space-y-2 transition duration-200 cursor-default">
                             <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.586 10.414a2 2 0 00-2.828 0L12 17.172l-6.758-6.758a2 2 0 10-2.828 2.828l8.172 8.172a2 2 0 002.828 0l8.172-8.172a2 2 0 000-2.828z"/></svg>
                             <span class="text-xs font-bold text-slate-700">مسبح خارجي مجهز</span>
                         </div>
-                        <div class="p-4 bg-slate-50 rounded-2xl flex flex-col items-center justify-center text-center space-y-2">
+                        <div class="p-4 bg-slate-50 border border-slate-100/50 hover:bg-slate-100 hover:scale-[1.02] rounded-2xl flex flex-col items-center justify-center text-center space-y-2 transition duration-200 cursor-default">
                             <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10M21 16V9a4 4 0 00-4-4h-4M21 16H3"/></svg>
                             <span class="text-xs font-bold text-slate-700">مواقف سيارات آمنة</span>
                         </div>
-                        <div class="p-4 bg-slate-50 rounded-2xl flex flex-col items-center justify-center text-center space-y-2">
+                        <div class="p-4 bg-slate-50 border border-slate-100/50 hover:bg-slate-100 hover:scale-[1.02] rounded-2xl flex flex-col items-center justify-center text-center space-y-2 transition duration-200 cursor-default">
                             <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3m14.5-6.5l-11 11m0-11l11 11"/></svg>
                             <span class="text-xs font-bold text-slate-700">تكييف مركزي كامل</span>
                         </div>

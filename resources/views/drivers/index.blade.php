@@ -40,7 +40,7 @@
                         تصفية البحث
                     </button>
                     @if(request()->anyFilled(['search', 'status']))
-                        <a href="{{ route('drivers.index') }}" class="inline-flex justify-center items-center py-2.5 px-4 bg-slate-100 hover:bg-slate-250 text-slate-700 text-sm font-bold rounded-xl transition">
+                        <a href="{{ route('drivers.index') }}" class="inline-flex justify-center items-center py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-xl transition">
                             إعادة تعيين
                         </a>
                     @endif
@@ -68,7 +68,13 @@
                             <div class="flex items-center justify-between border-b border-slate-50 pb-4 mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-14 h-14 rounded-full bg-slate-50 border border-slate-200 overflow-hidden flex items-center justify-center font-bold text-sky-700 text-lg shrink-0">
-                                        <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                        @if($driver->avatar && file_exists(public_path($driver->avatar)))
+                                            <img src="{{ asset($driver->avatar) }}" alt="{{ $driver->name }}" class="w-full h-full object-cover">
+                                        @elseif($driver->avatar && file_exists(public_path('storage/' . $driver->avatar)))
+                                            <img src="{{ asset('storage/' . $driver->avatar) }}" alt="{{ $driver->name }}" class="w-full h-full object-cover">
+                                        @else
+                                            <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                        @endif
                                     </div>
                                     <div class="text-right">
                                         <h3 class="font-bold text-slate-900 text-base">{{ $driver->name }}</h3>

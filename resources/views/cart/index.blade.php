@@ -39,7 +39,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                         <span>تصفح وحجز الفنادق</span>
                     </a>
-                    <a href="{{ route('drivers.index') }}" class="inline-flex justify-center items-center px-6 py-3 bg-slate-905 hover:bg-slate-800 text-white font-bold rounded-xl transition gap-2 border border-slate-700 bg-slate-800">
+                    <a href="{{ route('drivers.index') }}" class="inline-flex justify-center items-center px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition gap-2 border border-slate-700">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10M21 16V9a4 4 0 00-4-4h-4M21 16H3"/></svg>
                         <span>طلب تاكسي (سائقين)</span>
                     </a>

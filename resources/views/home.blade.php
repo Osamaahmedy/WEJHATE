@@ -1,8 +1,8 @@
 <x-app-layout>
     <!-- Hero Section -->
-    <div class="relative bg-slate-900 overflow-hidden py-20 sm:py-28 shadow-inner border-b border-slate-800">
+    <div class="relative bg-gradient-to-br from-slate-950 via-slate-900 to-sky-950 overflow-hidden py-20 sm:py-28 shadow-inner border-b border-slate-800">
         <!-- SVG decorative background pattern -->
-        <div class="absolute inset-0 opacity-10 pointer-events-none">
+        <div class="absolute inset-0 opacity-15 pointer-events-none">
             <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
                 <defs>
                     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -42,7 +42,8 @@
                 
                 <!-- Hero Image (Illustrative) -->
                 <div class="mt-12 lg:mt-0 lg:col-span-6 relative">
-                    <div class="relative mx-auto w-full max-w-md lg:max-w-none rounded-3xl shadow-2xl border border-slate-800/40 overflow-hidden transform hover:scale-[1.01] transition duration-300">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-sky-500 to-cyan-500 rounded-3xl blur opacity-25"></div>
+                    <div class="relative mx-auto w-full max-w-md lg:max-w-none rounded-3xl shadow-2xl border border-white/10 overflow-hidden transform hover:scale-[1.01] transition duration-300">
                         <img src="{{ asset('images/landmarks/sira.png') }}" alt="قلعة صيرة عدن" class="w-full h-auto object-cover max-h-[420px]">
                         <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-950 via-slate-900/30 to-transparent p-6 pt-16">
                             <span class="text-xs text-sky-400 font-bold tracking-widest uppercase">معالم تاريخية</span>
@@ -106,14 +107,20 @@
                 @foreach($featuredHotels as $hotel)
                     <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-md hover:scale-[1.01] transition duration-350 flex flex-col justify-between">
                         <div class="relative h-56 bg-slate-50">
-                            <!-- Hotel banner design -->
-                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-tr from-sky-850 to-cyan-600 text-white p-6 relative">
-                                <div class="absolute inset-0 bg-slate-950/20"></div>
-                                <div class="relative z-10 text-center space-y-2 flex flex-col items-center">
-                                    <svg class="w-10 h-10 text-sky-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                                    <h4 class="font-bold text-lg leading-tight">{{ $hotel->name }}</h4>
+                            @if($hotel->image && file_exists(public_path($hotel->image)))
+                                <img src="{{ asset($hotel->image) }}" alt="{{ $hotel->name }}" class="w-full h-full object-cover">
+                            @elseif($hotel->image && file_exists(public_path('storage/' . $hotel->image)))
+                                <img src="{{ asset('storage/' . $hotel->image) }}" alt="{{ $hotel->name }}" class="w-full h-full object-cover">
+                            @else
+                                <!-- Hotel banner design -->
+                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-tr from-sky-850 to-cyan-600 text-white p-6 relative">
+                                    <div class="absolute inset-0 bg-slate-950/20"></div>
+                                    <div class="relative z-10 text-center space-y-2 flex flex-col items-center">
+                                        <svg class="w-10 h-10 text-sky-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                                        <h4 class="font-bold text-lg leading-tight">{{ $hotel->name }}</h4>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             <span class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-xl text-xs font-bold text-slate-800 shadow-sm flex items-center gap-1">
                                 <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                                 {{ number_format($hotel->rating, 1) }}
@@ -166,7 +173,13 @@
                     <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-md hover:scale-[1.01] transition duration-300 p-6 flex flex-col justify-between">
                         <div class="flex items-center gap-4">
                             <div class="w-14 h-14 rounded-full bg-slate-50 border border-slate-150 overflow-hidden flex items-center justify-center font-bold text-sky-700 text-lg shrink-0">
-                                <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                @if($driver->avatar && file_exists(public_path($driver->avatar)))
+                                    <img src="{{ asset($driver->avatar) }}" alt="{{ $driver->name }}" class="w-full h-full object-cover">
+                                @elseif($driver->avatar && file_exists(public_path('storage/' . $driver->avatar)))
+                                    <img src="{{ asset('storage/' . $driver->avatar) }}" alt="{{ $driver->name }}" class="w-full h-full object-cover">
+                                @else
+                                    <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                @endif
                             </div>
                             <div class="text-right">
                                 <h3 class="font-bold text-slate-900 text-base">{{ $driver->name }}</h3>

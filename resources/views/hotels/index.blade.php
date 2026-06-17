@@ -35,7 +35,7 @@
                         تصفية البحث
                     </button>
                     @if(request()->anyFilled(['search', 'price_range']))
-                        <a href="{{ route('hotels.index') }}" class="inline-flex justify-center items-center py-2.5 px-4 bg-slate-150 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-xl transition">
+                        <a href="{{ route('hotels.index') }}" class="inline-flex justify-center items-center py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-xl transition">
                             إعادة تعيين
                         </a>
                     @endif
@@ -59,15 +59,21 @@
                 @foreach($hotels as $hotel)
                     <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-md hover:scale-[1.01] transition duration-300 flex flex-col justify-between">
                         <div class="relative h-56 bg-slate-50">
-                            <!-- Hotel image placeholder -->
-                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-tr from-sky-850 to-cyan-600 text-white p-6 relative">
-                                <div class="absolute inset-0 bg-slate-950/20"></div>
-                                <div class="relative z-10 text-center space-y-2 flex flex-col items-center">
-                                    <svg class="w-10 h-10 text-sky-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                                    <h4 class="font-bold text-lg leading-tight">{{ $hotel->name }}</h4>
+                            @if($hotel->image && file_exists(public_path($hotel->image)))
+                                <img src="{{ asset($hotel->image) }}" alt="{{ $hotel->name }}" class="w-full h-full object-cover">
+                            @elseif($hotel->image && file_exists(public_path('storage/' . $hotel->image)))
+                                <img src="{{ asset('storage/' . $hotel->image) }}" alt="{{ $hotel->name }}" class="w-full h-full object-cover">
+                            @else
+                                <!-- Hotel image placeholder -->
+                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-tr from-sky-850 to-cyan-600 text-white p-6 relative">
+                                    <div class="absolute inset-0 bg-slate-950/20"></div>
+                                    <div class="relative z-10 text-center space-y-2 flex flex-col items-center">
+                                        <svg class="w-10 h-10 text-sky-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                                        <h4 class="font-bold text-lg leading-tight">{{ $hotel->name }}</h4>
+                                    </div>
                                 </div>
-                            </div>
-                            <span class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-xl text-xs font-bold text-slate-800 shadow-sm flex items-center gap-1">
+                            @endif
+                            <span class="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-xl text-xs font-bold text-slate-800 shadow-sm flex items-center gap-1">
                                 <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                                 {{ number_format($hotel->rating, 1) }}
                             </span>
@@ -89,7 +95,7 @@
                             <div class="border-t border-slate-100 mt-6 pt-4 flex justify-between items-center">
                                 <div>
                                     <span class="text-xs text-slate-400 block">سعر الليلة يبدأ من</span>
-                                    <span class="text-lg font-black text-sky-655">${{ number_format($hotel->price_per_night, 0) }}</span>
+                                    <span class="text-lg font-black text-sky-600">${{ number_format($hotel->price_per_night, 0) }}</span>
                                 </div>
                                 <a href="{{ route('hotels.show', $hotel) }}" class="inline-flex justify-center items-center px-4.5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
                                     تفاصيل الحجز
